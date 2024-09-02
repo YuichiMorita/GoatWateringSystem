@@ -15,7 +15,7 @@ bool working; //稼働中かどうか
 //初期化
 void setup() {
   M5.begin();
-  M5.Power.begin(); 
+  M5.Power.begin();
   dacWrite(25, 0);  // disable the speak noise.
   pinMode(RELAY_PIN, OUTPUT);
   RTC.begin();
@@ -57,49 +57,49 @@ void fill(int time){
 void loop() {
   M5.update();
   RTC.getTime(&RTCtime);//時間所得
-  M5.Lcd.fillRect(0, 30, 320, 30, TFT_BLACK); 
+  M5.Lcd.fillRect(0, 30, 320, 30, TFT_BLACK);
   M5.Lcd.setCursor(0, 30);
   M5.Lcd.printf("%02d:%02d:%02d\n", RTCtime.Hours,RTCtime.Minutes, RTCtime.Seconds);
 
   //朝8時の水やり
   if(RTCtime.Hours == 8 && RTCtime.Minutes == 0 && RTCtime.Seconds >= 0 && RTCtime.Seconds <= 1 && working== false){
     M5.Lcd.setCursor(0, 30);
-    M5.Lcd.fillRect(0, 30, 320, 30, TFT_BLACK); 
+    M5.Lcd.fillRect(0, 30, 320, 30, TFT_BLACK);
     M5.Lcd.println("It's 8 o'clock! Let's work!");
-    fill(20000); //20秒 
+    fill(60000); //60秒
   }
-  
+
   //午後15時の水やり
   if(RTCtime.Hours == 15 && RTCtime.Minutes == 0 && RTCtime.Seconds >= 0 && RTCtime.Seconds <= 1 && working== false){
     M5.Lcd.setCursor(0, 30);
-    M5.Lcd.fillRect(0, 30, 320, 30, TFT_BLACK); 
+    M5.Lcd.fillRect(0, 30, 320, 30, TFT_BLACK);
     M5.Lcd.println("It's 15 o'clock! Let's work!");
-    fill(20000); //20秒 
+    fill(60000); //60秒
   }
 
-  if(M5.BtnA.wasReleased()){ 
+  if(M5.BtnA.wasReleased()){
   //ボタン”A”が押された時の動作
     M5.Lcd.setCursor(0, 60);
-    M5.Lcd.fillRect(0, 60, 320, 30, TFT_BLACK); 
+    M5.Lcd.fillRect(0, 60, 320, 30, TFT_BLACK);
 
-    M5.Lcd.println("A BTN:fill 20sec");
-    fill(20000); //20秒 
-    M5.Lcd.fillRect(0, 60, 320, 30, TFT_BLACK); 
+    M5.Lcd.println("A BTN:fill 60sec");
+    fill(60000); //60秒
+    M5.Lcd.fillRect(0, 60, 320, 30, TFT_BLACK);
 
   } else if(M5.BtnB.wasReleased()){
     //ボタン”B”が押された時の動作
     M5.Lcd.setCursor(0, 60);
-    M5.Lcd.fillRect(0, 60, 320, 30, TFT_BLACK); 
+    M5.Lcd.fillRect(0, 60, 320, 30, TFT_BLACK);
 
     M5.Lcd.println("B BTN:Water stop");
     digitalWrite(RELAY_PIN, LOW);//ソレノイドバルブ リレーOFF
     working = false;//稼働中フラグOFF
     delay(2000);
-    M5.Lcd.fillRect(0, 60, 320, 30, TFT_BLACK); 
+    M5.Lcd.fillRect(0, 60, 320, 30, TFT_BLACK);
 
   }else if(M5.BtnC.wasReleased()){
     //ボタン”C”が押された時の動作
-    M5.Lcd.fillRect(0, 60, 320, 30, TFT_BLACK); 
+    M5.Lcd.fillRect(0, 60, 320, 30, TFT_BLACK);
     M5.Lcd.setCursor(0, 60);
     M5.Lcd.println("C BTN:Water out");
     digitalWrite(RELAY_PIN, HIGH);//ソレノイドバルブ リレーON
